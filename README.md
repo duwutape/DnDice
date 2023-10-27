@@ -2,6 +2,7 @@
 little program with all dice for dnd
 
 Icon Sources:  
+coin by Valeriy from <a href="https://thenounproject.com/browse/icons/term/coin/" target="_blank" title="coin Icons">Noun Project</a> (CC BY 3.0)  
 d4 by Lonnie Tapscott from <a href="https://thenounproject.com/browse/icons/term/d4/" target="_blank" title="d4 Icons">Noun Project</a> (CC BY 3.0)  
 d6 by Lonnie Tapscott from <a href="https://thenounproject.com/browse/icons/term/d6/" target="_blank" title="d6 Icons">Noun Project</a> (CC BY 3.0)  
 d8 by Lonnie Tapscott from <a href="https://thenounproject.com/browse/icons/term/d8/" target="_blank" title="d8 Icons">Noun Project</a> (CC BY 3.0)  
