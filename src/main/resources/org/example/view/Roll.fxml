@@ -38,10 +38,11 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-
 
 <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
 <children>
@@ -51,29 +52,73 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <VBox layoutY="38.0" spacing="20.0">
+                        <VBox fillWidth="false" layoutX="86.0" layoutY="35.0" prefHeight="180.0" prefWidth="470.0" spacing="20.0">
                            <children>
                               <HBox spacing="50.0">
                                  <children>
-                                    <Button fx:id="d2Button" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" text="d2" />
-                                    <Button fx:id="d4Button" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" text="d4" />
-                                    <Button fx:id="d6Button" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" text="d6" />
-                                    <Button fx:id="d8Button" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" text="d8" />
+                                    <Button fx:id="d2Button" mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0">
+                                       <graphic>
+                                          <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../../coin.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic></Button>
+                                    <Button fx:id="d4Button" mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0">
+                                       <graphic>
+                                          <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../../d4.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic></Button>
+                                    <Button fx:id="d6Button" mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0">
+                                       <graphic>
+                                          <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../../d6.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic></Button>
+                                    <Button fx:id="d8Button" mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0">
+                                       <graphic>
+                                          <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../../d8.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
                                  </children>
-                                 <padding>
-                                    <Insets left="117.0" right="117.0" />
-                                 </padding>
                               </HBox>
                               <HBox fillHeight="false" prefHeight="64.0" prefWidth="640.0" spacing="50.0">
                                  <children>
-                                    <Button fx:id="d10Button" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" text="d10" />
-                                    <Button fx:id="d12Button" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" text="d12" />
-                                    <Button fx:id="d20Button" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" text="d20" />
-                                    <Button fx:id="d100Button" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" text="d100" />
+                                    <Button fx:id="d10Button" mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0">
+                                       <graphic>
+                                          <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../../d10.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic></Button>
+                                    <Button fx:id="d12Button" mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0">
+                                       <graphic>
+                                          <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../../d12.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic></Button>
+                                    <Button fx:id="d20Button" mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0">
+                                       <graphic>
+                                          <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../../d20.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic></Button>
+                                    <Button fx:id="d100Button" mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" text="d100" />
                                  </children>
-                                 <padding>
-                                    <Insets left="117.0" right="117.0" />
-                                 </padding>
                               </HBox>
                            </children>
                         </VBox>
