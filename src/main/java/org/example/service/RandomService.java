@@ -3,6 +3,7 @@ package org.example.service;
 import org.example.Constants;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 import static org.example.Constants.DICE;
@@ -34,5 +35,23 @@ public class RandomService {
 
     public int addBonus(int roll, int bonus) {
         return roll + bonus;
+    }
+
+    public ArrayList<Integer> rollStats(){
+        ArrayList<Integer> out = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            out.add(roll(6));
+        }
+        Collections.sort(out);
+        Collections.reverse(out);
+        return out;
+    }
+
+    public int addStats(ArrayList<Integer> ints){
+        int res =  0;
+        for (int i = 0; i < 3; i++) {
+            res += ints.get(i);
+        }
+        return res;
     }
 }

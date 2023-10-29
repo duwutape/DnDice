@@ -5,6 +5,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import org.example.App;
 import org.example.Main;
 import org.example.service.RandomService;
@@ -64,14 +65,14 @@ public class RollController implements Controller {
         Label resultLabel = (Label) parent.lookup("#resultLabelSingle");
 
 
-        resultLabel.setStyle(FONT_SIZE + SIZE_BIG + ";" + FONT_COLOR + DISPLAY_BLACK);
+        resultLabel.setStyle(FONT_SIZE + SIZE_BIG + ";" + TEXT_COLOR + DISPLAY_BLACK);
 
         d2Button.setOnAction(action -> {
             int result = randomService.roll(2);
             int bonus = Integer.parseInt(bonusText.getText());
 
             resultLabel.setText(createOutput(result, bonus));
-            resultLabel.setStyle(FONT_SIZE + SIZE_BIG + ";" + FONT_COLOR + DISPLAY_BLACK);
+            resultLabel.setStyle(FONT_SIZE + SIZE_BIG + ";" + TEXT_COLOR + DISPLAY_BLACK);
         });
 
         d4Button.setOnAction(action -> {
@@ -79,7 +80,7 @@ public class RollController implements Controller {
             int bonus = Integer.parseInt(bonusText.getText());
 
             resultLabel.setText(createOutput(result, bonus));
-            resultLabel.setStyle(FONT_SIZE + SIZE_BIG + ";" + FONT_COLOR + DISPLAY_BLACK);
+            resultLabel.setStyle(FONT_SIZE + SIZE_BIG + ";" + TEXT_COLOR + DISPLAY_BLACK);
         });
 
         d6Button.setOnAction(action -> {
@@ -87,7 +88,7 @@ public class RollController implements Controller {
             int bonus = Integer.parseInt(bonusText.getText());
 
             resultLabel.setText(createOutput(result, bonus));
-            resultLabel.setStyle(FONT_SIZE + SIZE_BIG + ";" + FONT_COLOR + DISPLAY_BLACK);
+            resultLabel.setStyle(FONT_SIZE + SIZE_BIG + ";" + TEXT_COLOR + DISPLAY_BLACK);
         });
 
         d8Button.setOnAction(action -> {
@@ -95,7 +96,7 @@ public class RollController implements Controller {
             int bonus = Integer.parseInt(bonusText.getText());
 
             resultLabel.setText(createOutput(result, bonus));
-            resultLabel.setStyle(FONT_SIZE + SIZE_BIG + ";" + FONT_COLOR + DISPLAY_BLACK);
+            resultLabel.setStyle(FONT_SIZE + SIZE_BIG + ";" + TEXT_COLOR + DISPLAY_BLACK);
         });
 
         d10Button.setOnAction(action -> {
@@ -103,7 +104,7 @@ public class RollController implements Controller {
             int bonus = Integer.parseInt(bonusText.getText());
 
             resultLabel.setText(createOutput(result, bonus));
-            resultLabel.setStyle(FONT_SIZE + SIZE_BIG + ";" + FONT_COLOR + DISPLAY_BLACK);
+            resultLabel.setStyle(FONT_SIZE + SIZE_BIG + ";" + TEXT_COLOR + DISPLAY_BLACK);
         });
 
         d12Button.setOnAction(action -> {
@@ -111,7 +112,7 @@ public class RollController implements Controller {
             int bonus = Integer.parseInt(bonusText.getText());
 
             resultLabel.setText(createOutput(result, bonus));
-            resultLabel.setStyle(FONT_SIZE + SIZE_BIG + ";" + FONT_COLOR + DISPLAY_BLACK);
+            resultLabel.setStyle(FONT_SIZE + SIZE_BIG + ";" + TEXT_COLOR + DISPLAY_BLACK);
         });
 
         d20Button.setOnAction(action -> {
@@ -121,11 +122,11 @@ public class RollController implements Controller {
             resultLabel.setText(createOutput(result, bonus));
 
             if (result == 1) {
-                resultLabel.setStyle(FONT_SIZE + SIZE_BIG + ";" + FONT_COLOR + DISPLAY_RED);
+                resultLabel.setStyle(FONT_SIZE + SIZE_BIG + ";" + TEXT_COLOR + DISPLAY_RED);
             } else if (result == 20) {
-                resultLabel.setStyle(FONT_SIZE + SIZE_BIG + ";" + FONT_COLOR + DISPLAY_GREEN);
+                resultLabel.setStyle(FONT_SIZE + SIZE_BIG + ";" + TEXT_COLOR + DISPLAY_GREEN);
             } else {
-                resultLabel.setStyle((FONT_SIZE + SIZE_BIG + ";" + FONT_COLOR + DISPLAY_BLACK));
+                resultLabel.setStyle((FONT_SIZE + SIZE_BIG + ";" + TEXT_COLOR + DISPLAY_BLACK));
             }
         });
 
@@ -134,7 +135,7 @@ public class RollController implements Controller {
             int bonus = Integer.parseInt(bonusText.getText());
 
             resultLabel.setText(createOutput(result, bonus));
-            resultLabel.setStyle(FONT_SIZE + SIZE_BIG + ";" + FONT_COLOR + DISPLAY_BLACK);
+            resultLabel.setStyle(FONT_SIZE + SIZE_BIG + ";" + TEXT_COLOR + DISPLAY_BLACK);
         });
 
         bonusSubButton.setOnAction(action -> {
@@ -165,7 +166,7 @@ public class RollController implements Controller {
         Button rollButton = (Button) parent.lookup("#rollButtonAdvanced");
         Label resultLabelAdvanced = (Label) parent.lookup("#resultLabelAdvanced");
 
-        resultLabelAdvanced.setStyle(FONT_SIZE + SIZE_BIG + ";" + FONT_COLOR + DISPLAY_BLACK);
+        resultLabelAdvanced.setStyle(FONT_SIZE + SIZE_BIG + ";" + TEXT_COLOR + DISPLAY_BLACK);
 
         for (int i = 0; i < 8; i++) {
             final DieController dieController = new DieController();
@@ -191,9 +192,22 @@ public class RollController implements Controller {
                 amounts.add(Integer.parseInt(amountText.getText()));
             }
             resultLabelAdvanced.setText(String.valueOf(randomService.roll(amounts)));
-            resultLabelAdvanced.setStyle(FONT_SIZE + SIZE_BIG + ";" + FONT_COLOR + DISPLAY_BLACK);
+            resultLabelAdvanced.setStyle(FONT_SIZE + SIZE_BIG + ";" + TEXT_COLOR + DISPLAY_BLACK);
         });
 
+        // tab roll stats
+
+        VBox statVBox = (VBox) parent.lookup("#statVBox");
+        Button rollStatsButton = (Button) parent.lookup("#rollStatsButton");
+
+        rollStatsButton.setOnAction(action -> {
+            statVBox.getChildren().clear();
+
+            for (int i = 0; i < 6; i++) {
+                ArrayList<Integer> stats = randomService.rollStats();
+                createStatsLayout(statVBox, stats);
+            }
+        });
         return parent;
     }
 
@@ -211,9 +225,37 @@ public class RollController implements Controller {
         return out.toString();
     }
 
+    private void createStatsLayout(VBox vBox, ArrayList<Integer> stats) {
+        StringBuilder sbLeft = new StringBuilder();
+        StringBuilder sbRight = new StringBuilder();
+
+        sbLeft.append("[");
+        for (int i = 0; i < 3; i++) {
+            sbLeft.append(stats.get(i)).append(", ");
+        }
+
+        sbRight.append("] = ").append(randomService.addStats(stats));
+
+        HBox hBox = new HBox();
+
+        Text textLeft = new Text(sbLeft.toString());
+        textLeft.setStyle(FONT_SIZE + SIZE_BIG);
+
+        Text textMid = new Text(String.valueOf(stats.get(3)));
+        textMid.setStyle(FONT_SIZE + SIZE_BIG + ";" + TEXT_STRIKE + TRUE);
+
+        Text textRight = new Text(sbRight.toString());
+        textRight.setStyle(FONT_SIZE + SIZE_BIG);
+
+        hBox.getChildren().add(textLeft);
+        hBox.getChildren().add(textMid);
+        hBox.getChildren().add(textRight);
+
+        vBox.getChildren().add(hBox);
+    }
 
     @Override
     public void destroy() {
-
+        subControllers.forEach(Controller::destroy);
     }
 }

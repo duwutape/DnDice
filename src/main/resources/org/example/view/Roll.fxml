@@ -156,6 +156,16 @@
                   </AnchorPane>
             </content>
           </Tab>
+            <Tab text="roll stats">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <VBox fx:id="statVBox" layoutX="241.0" layoutY="47.0" />
+                        <Button fx:id="rollStatsButton" layoutX="290.0" layoutY="292.0" mnemonicParsing="false" text="roll stats" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
         </tabs>
       </TabPane>
 </children>

@@ -5,11 +5,14 @@ import java.util.List;
 public class Constants {
 
     public static final List<Integer> DICE = List.of(2, 4, 6, 8, 10, 12, 20, 100);
+    public static final String TRUE = "true";
+    public static final String FALSE = "false";
 
     // sytles
     public static final String FONT_SIZE = "-fx-font-size: ";
     public static final String FONT_WEIGHT = "-fx-font-weight: ";
-    public static final String FONT_COLOR = "-fx-text-fill: ";
+    public static final String TEXT_COLOR = "-fx-text-fill: ";
+    public static final String TEXT_STRIKE = "-fx-strikethrough: ";
     public static final int SIZE_SMALL = 12;
     public static final int SIZE_BIG = 24;
 
