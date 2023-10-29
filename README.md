@@ -5,9 +5,10 @@ little program with all dice for dnd
 rolling a single die with or without a bonus  
 rolling multiple dice  
 rolling stats  
+attack rolls with bonus  
 
 ## upcoming updates  
-attack rolls with bonus  
+
 
 ### Icon Sources:  
 coin by Valeriy from <a href="https://thenounproject.com/browse/icons/term/coin/" target="_blank" title="coin Icons">Noun Project</a> (CC BY 3.0)  
