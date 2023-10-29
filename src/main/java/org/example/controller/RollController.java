@@ -48,6 +48,21 @@ public class RollController implements Controller {
         Parent parent = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("view/Roll.fxml")));
 
         // tab singe roll
+        createSingleRollTab(parent);
+
+        // tab advanced roll
+        createAdvancedRollTab(parent);
+
+        // attack roll
+        createAttackRollTab(parent);
+
+        // tab roll stats
+        createRollStatsTab(parent);
+
+        return parent;
+    }
+
+    private void createSingleRollTab(Parent parent) {
         Button d2Button = (Button) parent.lookup("#d2Button");
         Button d4Button = (Button) parent.lookup("#d4Button");
         Button d6Button = (Button) parent.lookup("#d6Button");
@@ -62,14 +77,13 @@ public class RollController implements Controller {
         Button bonusResetButton = (Button) parent.lookup("#bonusReset");
         Label resultLabel = (Label) parent.lookup("#resultLabelSingle");
 
-
         resultLabel.setStyle(FONT_SIZE + SIZE_BIG + ";" + TEXT_COLOR + DISPLAY_BLACK);
 
         d2Button.setOnAction(action -> {
             int result = randomService.roll(2);
             int bonus = Integer.parseInt(bonusText.getText());
 
-            resultLabel.setText(createOutput(result, bonus));
+            resultLabel.setText(createBonusOutput(result, bonus));
             resultLabel.setStyle(FONT_SIZE + SIZE_BIG + ";" + TEXT_COLOR + DISPLAY_BLACK);
         });
 
@@ -77,7 +91,7 @@ public class RollController implements Controller {
             int result = randomService.roll(4);
             int bonus = Integer.parseInt(bonusText.getText());
 
-            resultLabel.setText(createOutput(result, bonus));
+            resultLabel.setText(createBonusOutput(result, bonus));
             resultLabel.setStyle(FONT_SIZE + SIZE_BIG + ";" + TEXT_COLOR + DISPLAY_BLACK);
         });
 
@@ -85,7 +99,7 @@ public class RollController implements Controller {
             int result = randomService.roll(6);
             int bonus = Integer.parseInt(bonusText.getText());
 
-            resultLabel.setText(createOutput(result, bonus));
+            resultLabel.setText(createBonusOutput(result, bonus));
             resultLabel.setStyle(FONT_SIZE + SIZE_BIG + ";" + TEXT_COLOR + DISPLAY_BLACK);
         });
 
@@ -93,7 +107,7 @@ public class RollController implements Controller {
             int result = randomService.roll(8);
             int bonus = Integer.parseInt(bonusText.getText());
 
-            resultLabel.setText(createOutput(result, bonus));
+            resultLabel.setText(createBonusOutput(result, bonus));
             resultLabel.setStyle(FONT_SIZE + SIZE_BIG + ";" + TEXT_COLOR + DISPLAY_BLACK);
         });
 
@@ -101,7 +115,7 @@ public class RollController implements Controller {
             int result = randomService.roll(10);
             int bonus = Integer.parseInt(bonusText.getText());
 
-            resultLabel.setText(createOutput(result, bonus));
+            resultLabel.setText(createBonusOutput(result, bonus));
             resultLabel.setStyle(FONT_SIZE + SIZE_BIG + ";" + TEXT_COLOR + DISPLAY_BLACK);
         });
 
@@ -109,7 +123,7 @@ public class RollController implements Controller {
             int result = randomService.roll(12);
             int bonus = Integer.parseInt(bonusText.getText());
 
-            resultLabel.setText(createOutput(result, bonus));
+            resultLabel.setText(createBonusOutput(result, bonus));
             resultLabel.setStyle(FONT_SIZE + SIZE_BIG + ";" + TEXT_COLOR + DISPLAY_BLACK);
         });
 
@@ -117,7 +131,7 @@ public class RollController implements Controller {
             int result = randomService.roll(20);
             int bonus = Integer.parseInt(bonusText.getText());
 
-            resultLabel.setText(createOutput(result, bonus));
+            resultLabel.setText(createBonusOutput(result, bonus));
 
             if (result == 1) {
                 resultLabel.setStyle(FONT_SIZE + SIZE_BIG + ";" + TEXT_COLOR + DISPLAY_RED);
@@ -132,7 +146,7 @@ public class RollController implements Controller {
             int result = randomService.roll(100);
             int bonus = Integer.parseInt(bonusText.getText());
 
-            resultLabel.setText(createOutput(result, bonus));
+            resultLabel.setText(createBonusOutput(result, bonus));
             resultLabel.setStyle(FONT_SIZE + SIZE_BIG + ";" + TEXT_COLOR + DISPLAY_BLACK);
         });
 
@@ -153,10 +167,9 @@ public class RollController implements Controller {
         });
 
         bonusResetButton.setOnAction(action -> bonusText.setText("0"));
+    }
 
-
-        // tab advanced roll
-
+    private void createAdvancedRollTab(Parent parent) throws IOException {
         VBox dieBoxLeft = (VBox) parent.lookup("#vboxLeft");
         VBox dieBoxRight = (VBox) parent.lookup("#vboxRight");
         Button rollButton = (Button) parent.lookup("#rollButtonAdvanced");
@@ -190,9 +203,13 @@ public class RollController implements Controller {
             resultLabelAdvanced.setText(String.valueOf(randomService.roll(amounts)));
             resultLabelAdvanced.setStyle(FONT_SIZE + SIZE_BIG + ";" + TEXT_COLOR + DISPLAY_BLACK);
         });
+    }
 
-        // tab roll stats
+    private void createAttackRollTab(Parent parent) {
 
+    }
+
+    private void createRollStatsTab(Parent parent) {
         VBox statVBox = (VBox) parent.lookup("#statVBox");
         Button rollStatsButton = (Button) parent.lookup("#rollStatsButton");
 
@@ -204,10 +221,9 @@ public class RollController implements Controller {
                 createStatsLayout(statVBox, stats);
             }
         });
-        return parent;
     }
 
-    private String createOutput(int roll, int bonus) {
+    private String createBonusOutput(int roll, int bonus) {
         StringBuilder out = new StringBuilder();
         out.append(roll);
 
@@ -230,7 +246,11 @@ public class RollController implements Controller {
             sbLeft.append(stats.get(i)).append(", ");
         }
 
-        sbRight.append("] = ").append(randomService.addStats(stats));
+        sbRight.append("] = ");
+        if(randomService.addStats(stats) < 10){
+            sbRight.append("0");
+        }
+        sbRight.append(randomService.addStats(stats));
 
         HBox hBox = new HBox();
 
