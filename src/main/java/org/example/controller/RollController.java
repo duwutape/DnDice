@@ -21,8 +21,6 @@ public class RollController implements Controller {
     private final App app;
     private final RandomService randomService;
     private final ArrayList<Controller> subControllers = new ArrayList<>();
-    VBox dieBoxLeft;
-    VBox dieBoxRight;
 
     public RollController(App app, RandomService randomService) {
         this.app = app;
@@ -154,9 +152,7 @@ public class RollController implements Controller {
             bonusText.setText(String.valueOf(bonus));
         });
 
-        bonusResetButton.setOnAction(action -> {
-            bonusText.setText("0");
-        });
+        bonusResetButton.setOnAction(action -> bonusText.setText("0"));
 
 
         // tab advanced roll

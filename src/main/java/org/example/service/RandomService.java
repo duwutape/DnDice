@@ -1,7 +1,5 @@
 package org.example.service;
 
-import org.example.Constants;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -37,7 +35,7 @@ public class RandomService {
         return roll + bonus;
     }
 
-    public ArrayList<Integer> rollStats(){
+    public ArrayList<Integer> rollStats() {
         ArrayList<Integer> out = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             out.add(roll(6));
@@ -47,8 +45,8 @@ public class RandomService {
         return out;
     }
 
-    public int addStats(ArrayList<Integer> ints){
-        int res =  0;
+    public int addStats(ArrayList<Integer> ints) {
+        int res = 0;
         for (int i = 0; i < 3; i++) {
             res += ints.get(i);
         }
