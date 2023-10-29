@@ -1,11 +1,15 @@
 # DnDice
 little program with all dice for dnd
 
+## current features  
+rolling a single die with or without a bonus  
+rolling multiple dice  
+rolling stats  
+
 ## upcoming updates  
-stat rolls  
 attack rolls with bonus  
 
-## Icon Sources:  
+### Icon Sources:  
 coin by Valeriy from <a href="https://thenounproject.com/browse/icons/term/coin/" target="_blank" title="coin Icons">Noun Project</a> (CC BY 3.0)  
 d4 by Lonnie Tapscott from <a href="https://thenounproject.com/browse/icons/term/d4/" target="_blank" title="d4 Icons">Noun Project</a> (CC BY 3.0)  
 d6 by Lonnie Tapscott from <a href="https://thenounproject.com/browse/icons/term/d6/" target="_blank" title="d6 Icons">Noun Project</a> (CC BY 3.0)  
