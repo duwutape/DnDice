@@ -31,6 +31,37 @@ public class RandomService {
         return result;
     }
 
+    public int roll(String die) {
+        switch (die) {
+            case "d2" -> {
+                return roll(2);
+            }
+            case "d4" -> {
+                return roll(4);
+            }
+            case "d6" -> {
+                return roll(6);
+            }
+            case "d8" -> {
+                return roll(8);
+            }
+            case "d10" -> {
+                return roll(10);
+            }
+            case "d12" -> {
+                return roll(12);
+            }
+            case "d20" -> {
+                return roll(20);
+            }
+            case "d100" -> {
+                return roll(100);
+            }
+
+        }
+        return 0;
+    }
+
     public int addBonus(int roll, int bonus) {
         return roll + bonus;
     }
@@ -51,5 +82,13 @@ public class RandomService {
             res += ints.get(i);
         }
         return res;
+    }
+
+    public int add(ArrayList<Integer> ints) {
+        int result = 0;
+        for (Integer i : ints) {
+            result += i;
+        }
+        return result;
     }
 }

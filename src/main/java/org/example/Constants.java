@@ -1,5 +1,6 @@
 package org.example;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Constants {
@@ -7,8 +8,9 @@ public class Constants {
     public static final List<Integer> DICE = List.of(2, 4, 6, 8, 10, 12, 20, 100);
     public static final String TRUE = "true";
     public static final String FALSE = "false";
+    public static final List<String> DICE_NAME = List.of("select die", "d2", "d4", "d6", "d8", "d10", "d12", "d20", "d100");
 
-    // sytles
+    // styles
     public static final String FONT_SIZE = "-fx-font-size: ";
     public static final String FONT_WEIGHT = "-fx-font-weight: ";
     public static final String TEXT_COLOR = "-fx-text-fill: ";

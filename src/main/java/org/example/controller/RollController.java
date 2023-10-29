@@ -205,8 +205,57 @@ public class RollController implements Controller {
         });
     }
 
-    private void createAttackRollTab(Parent parent) {
+    private void createAttackRollTab(Parent parent) throws IOException {
+        VBox attackBox = (VBox) parent.lookup("#attackVBox");
+        Button rollAttackButton = (Button) parent.lookup("#rollAttackButton");
+        Label attackLabel = (Label) parent.lookup("#resultLabelAttackGes");
 
+        ArrayList<Integer> results = new ArrayList<>();
+
+        for (int i = 0; i < 8; i++) {
+            final DieSelectController dieSelectController = new DieSelectController();
+            subControllers.add(dieSelectController);
+            dieSelectController.init();
+
+            attackBox.getChildren().add(dieSelectController.render());
+
+            rollAttackButton.setOnAction(action -> {
+                ArrayList<HBox> hBoxes = new ArrayList<>();
+                for (Object obj : attackBox.getChildren()) {
+                    hBoxes.add((HBox) obj);
+                }
+
+                ArrayList<String> dice = new ArrayList<>();
+                ArrayList<Integer> bonus = new ArrayList<>();
+                ArrayList<Label> resultLabels = new ArrayList<>();
+
+                for (HBox box : hBoxes) {
+                    ChoiceBox choiceDie = (ChoiceBox) box.getChildren().get(0);
+                    TextField bonusText = (TextField) box.getChildren().get(3);
+                    Label resultLabel = (Label) box.getChildren().get(6);
+
+                    dice.add(choiceDie.getValue().toString());
+                    bonus.add(Integer.parseInt(bonusText.getText()));
+                    resultLabels.add(resultLabel);
+                }
+
+                results.clear();
+                for (int j = 0; j < dice.size(); j++) {
+                    if (!Objects.equals(dice.get(j), DICE_NAME.get(0))) {
+                        int roll = randomService.roll(dice.get(j));
+                        results.add(randomService.addBonus(roll, bonus.get(j)));
+
+                        resultLabels.get(j).setText(createBonusOutput(roll, bonus.get(j)));
+                    } else {
+                        resultLabels.get(j).setText("");
+                    }
+                }
+
+                attackLabel.setText(String.valueOf(randomService.add(results)));
+                attackLabel.setStyle(FONT_SIZE + SIZE_BIG + ";" + TEXT_COLOR + DISPLAY_BLACK);
+
+            });
+        }
     }
 
     private void createRollStatsTab(Parent parent) {
@@ -247,7 +296,7 @@ public class RollController implements Controller {
         }
 
         sbRight.append("] = ");
-        if(randomService.addStats(stats) < 10){
+        if (randomService.addStats(stats) < 10) {
             sbRight.append("0");
         }
         sbRight.append(randomService.addStats(stats));
