@@ -57,9 +57,10 @@ public class RandomService {
             case "d100" -> {
                 return roll(100);
             }
-
+            default -> {
+                return 0;
+            }
         }
-        return 0;
     }
 
     public int addBonus(int roll, int bonus) {
