@@ -1,6 +1,8 @@
 package org.example.controller;
 
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -209,8 +211,12 @@ public class RollController implements Controller {
         VBox attackBox = (VBox) parent.lookup("#attackVBox");
         Button rollAttackButton = (Button) parent.lookup("#rollAttackButton");
         Label attackLabel = (Label) parent.lookup("#resultLabelAttackGes");
+        HBox labelBox = (HBox) parent.lookup("#labelBox");
 
-        ArrayList<Integer> results = new ArrayList<>();
+        for (Node child : labelBox.getChildren()) {
+            Label label = (Label) child;
+            label.setAlignment(Pos.CENTER);
+        }
 
         for (int i = 0; i < 8; i++) {
             final DieSelectController dieSelectController = new DieSelectController();
@@ -225,35 +231,30 @@ public class RollController implements Controller {
                     hBoxes.add((HBox) obj);
                 }
 
-                ArrayList<String> dice = new ArrayList<>();
-                ArrayList<Integer> bonus = new ArrayList<>();
-                ArrayList<Label> resultLabels = new ArrayList<>();
+                int res = 0;
 
                 for (HBox box : hBoxes) {
                     ChoiceBox choiceDie = (ChoiceBox) box.getChildren().get(0);
-                    TextField bonusText = (TextField) box.getChildren().get(3);
-                    Label resultLabel = (Label) box.getChildren().get(6);
+                    TextField amountText = (TextField) box.getChildren().get(2);
+                    TextField bonusText = (TextField) box.getChildren().get(6);
+                    CheckBox addCheck = (CheckBox) box.getChildren().get(9);
 
-                    dice.add(choiceDie.getValue().toString());
-                    bonus.add(Integer.parseInt(bonusText.getText()));
-                    resultLabels.add(resultLabel);
-                }
+                    String die = choiceDie.getValue().toString();
+                    int amount = Integer.parseInt(amountText.getText());
+                    int bonus = Integer.parseInt(bonusText.getText());
+                    boolean check = addCheck.isSelected();
 
-                results.clear();
-                for (int j = 0; j < dice.size(); j++) {
-                    if (!Objects.equals(dice.get(j), DICE_NAME.get(0))) {
-                        int roll = randomService.roll(dice.get(j));
-                        results.add(randomService.addBonus(roll, bonus.get(j)));
-
-                        resultLabels.get(j).setText(createBonusOutput(roll, bonus.get(j)));
+                    for (int j = 0; j < amount; j++) {
+                        res += randomService.roll(die);
+                    }
+                    if (check){
+                        res += bonus*amount;
                     } else {
-                        resultLabels.get(j).setText("");
+                        res += bonus;
                     }
                 }
-
-                attackLabel.setText(String.valueOf(randomService.add(results)));
+                attackLabel.setText(String.valueOf(res));
                 attackLabel.setStyle(FONT_SIZE + SIZE_BIG + ";" + TEXT_COLOR + DISPLAY_BLACK);
-
             });
         }
     }

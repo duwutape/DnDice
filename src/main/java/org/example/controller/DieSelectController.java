@@ -32,6 +32,10 @@ public class DieSelectController implements Controller{
         Parent parent = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("view/DieSelect.fxml")));
 
         ChoiceBox dieSelectBox = (ChoiceBox) parent.lookup("#dieSelect");
+        Button amountSubButton = (Button) parent.lookup("#amountSub");
+        TextField amountField = (TextField) parent.lookup("#amountField");
+        Button amountAddButton = (Button) parent.lookup("#amountAdd");
+        Button amountResetButton = (Button) parent.lookup("#amountReset");
         Button bonusSubButton = (Button) parent.lookup("#bonusSub");
         TextField bonusField = (TextField) parent.lookup("#bonusField");
         Button bonusAddButton = (Button) parent.lookup("#bonusAdd");
@@ -39,6 +43,26 @@ public class DieSelectController implements Controller{
 
         dieSelectBox.setItems(FXCollections.observableArrayList(Constants.DICE_NAME));
         dieSelectBox.setValue(Constants.DICE_NAME.get(0));
+
+        amountSubButton.setOnAction(action -> {
+            int bonus = Integer.parseInt(amountField.getText());
+            if (bonus > 0) {
+                bonus--;
+            }
+            amountField.setText(String.valueOf(bonus));
+        });
+
+        amountAddButton.setOnAction(action -> {
+            int bonus = Integer.parseInt(amountField.getText());
+            if (bonus < 100) {
+                bonus++;
+            }
+            amountField.setText(String.valueOf(bonus));
+        });
+
+        amountResetButton.setOnAction(action -> {
+            amountField.setText("0");
+        });
 
         bonusSubButton.setOnAction(action -> {
             int bonus = Integer.parseInt(bonusField.getText());

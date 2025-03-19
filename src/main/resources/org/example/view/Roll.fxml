@@ -44,7 +44,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
 <children>
       <TabPane prefHeight="400.0" prefWidth="640.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -160,7 +160,27 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <VBox fx:id="attackVBox" layoutX="67.0" layoutY="30.0" />
+                        <HBox fx:id="labelBox" layoutX="34.0" layoutY="30.0">
+                           <children>
+                              <Label prefWidth="100.0" text="Select Die" textAlignment="CENTER" />
+                              <Label layoutX="10.0" layoutY="10.0" prefWidth="152.0" text="Amount Die">
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label layoutX="63.0" layoutY="10.0" prefWidth="152.0" text="Bonus">
+                                 <HBox.margin>
+                                    <Insets left="20.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label layoutX="115.0" layoutY="10.0" text="Add bonus to every roll?">
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <VBox fx:id="attackVBox" layoutX="34.0" layoutY="48.0" />
                         <Button fx:id="rollAttackButton" layoutX="304.0" layoutY="319.0" mnemonicParsing="false" text="roll" />
                         <Label fx:id="resultLabelAttackGes" alignment="CENTER" layoutX="237.0" layoutY="255.0" prefHeight="64.0" prefWidth="167.0" text="result" textAlignment="CENTER" />
                      </children>
