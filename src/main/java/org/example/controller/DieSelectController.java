@@ -66,7 +66,7 @@ public class DieSelectController implements Controller{
 
         bonusSubButton.setOnAction(action -> {
             int bonus = Integer.parseInt(bonusField.getText());
-            if (bonus > 0) {
+            if (bonus > -10) {
                 bonus--;
             }
             bonusField.setText(String.valueOf(bonus));
