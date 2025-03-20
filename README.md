@@ -8,7 +8,8 @@ rolling stats
 attack rolls with bonus  
 
 ## upcoming updates  
-multiple attack rolls with same die
+multiple attack rolls with same die  
+unit converter (feet &harr; meters, feet &harr; fields, meter &harr; fields)
 
 ### Icon Sources:  
 coin by Valeriy from <a href="https://thenounproject.com/browse/icons/term/coin/" target="_blank" title="coin Icons">Noun Project</a> (CC BY 3.0)  

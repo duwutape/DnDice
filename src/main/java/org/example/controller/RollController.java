@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import javafx.collections.FXCollections;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -12,8 +13,10 @@ import org.example.App;
 import org.example.Main;
 import org.example.service.RandomService;
 
+import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import static org.example.Constants.*;
@@ -23,6 +26,12 @@ public class RollController implements Controller {
     private final App app;
     private final RandomService randomService;
     private final ArrayList<Controller> subControllers = new ArrayList<>();
+    private double mpf;
+    private double fpf;
+    private boolean isEnabled;
+    private PropertyChangeListener unitListener;
+    private PropertyChangeListener amountListener;
+    private String unit;
 
     public RollController(App app, RandomService randomService) {
         this.app = app;
@@ -60,6 +69,9 @@ public class RollController implements Controller {
 
         // tab roll stats
         createRollStatsTab(parent);
+
+        // tab unit converter
+        createUnitConvertTab(parent);
 
         return parent;
     }
@@ -247,8 +259,8 @@ public class RollController implements Controller {
                     for (int j = 0; j < amount; j++) {
                         res += randomService.roll(die);
                     }
-                    if (check){
-                        res += bonus*amount;
+                    if (check) {
+                        res += bonus * amount;
                     } else {
                         res += bonus;
                     }
@@ -271,6 +283,73 @@ public class RollController implements Controller {
                 createStatsLayout(statVBox, stats);
             }
         });
+    }
+
+    private void createUnitConvertTab(Parent parent) throws IOException {
+        TextField confUnitField = (TextField) parent.lookup("#unitFieldConf");
+        ChoiceBox confUnitSelect = (ChoiceBox) parent.lookup("#unitSelectConf");
+        TextField confFieldField = (TextField) parent.lookup("#fieldFieldConf");
+        Button setButton = (Button) parent.lookup("#setButton");
+        Label eqLabel = (Label) parent.lookup("#eqLabel");
+        Label fieldLabel = (Label) parent.lookup("#fieldLabel");
+        TextField unitField = (TextField) parent.lookup("#unitField");
+        ChoiceBox unitSelect = (ChoiceBox) parent.lookup("#unitSelect");
+        Label outputField = (Label) parent.lookup("#outputField");
+        Button convertButton = (Button) parent.lookup("#convertButton");
+
+        confUnitSelect.setItems(FXCollections.observableArrayList(UNITS));
+        confUnitSelect.setValue(UNITS.get(0));
+
+        confUnitField.setAlignment(Pos.CENTER);
+        confFieldField.setAlignment(Pos.CENTER);
+
+        unitSelect.setItems(FXCollections.observableArrayList(ALL_UNITS));
+        unitSelect.setValue(ALL_UNITS.get(0));
+        unitField.setAlignment(Pos.CENTER);
+
+        mpf = 1.52;
+        fpf = 5.0;
+        isEnabled = true;
+        setButton.setOnAction(action -> {
+            if (confUnitField.getText().matches("[1-9][0-9]*.?[1-9]*") && confFieldField.getText().matches("[1-9][0-9]*.?[1-9]*") && isEnabled) {
+                String unit = confUnitSelect.getValue().toString();
+                if (unit.equals(FEET)) {
+                    fpf = Double.parseDouble(confUnitField.getText()) / Double.parseDouble(confFieldField.getText());
+                    mpf = fpf * 0.3048;
+                } else {
+                    mpf = Double.parseDouble(confUnitField.getText()) / Double.parseDouble(confFieldField.getText());
+                    fpf = mpf * 3.2808;
+                }
+                mpf = Math.round(mpf * 100.0) / 100.0;
+                fpf = Math.round(fpf * 100.0) / 100.0;
+
+                confUnitField.setDisable(true);
+                confUnitSelect.setDisable(true);
+                confFieldField.setDisable(true);
+                eqLabel.setStyle(TEXT_COLOR + DISPLAY_GRAY);
+                fieldLabel.setStyle(TEXT_COLOR + DISPLAY_GRAY);
+                isEnabled = false;
+                setButton.setText("change");
+
+            } else if (!isEnabled) {
+                confUnitField.setDisable(false);
+                confUnitSelect.setDisable(false);
+                confFieldField.setDisable(false);
+                eqLabel.setStyle(TEXT_COLOR + DISPLAY_BLACK);
+                fieldLabel.setStyle(TEXT_COLOR + DISPLAY_BLACK);
+                isEnabled = true;
+                setButton.setText("set");
+            }
+        });
+
+        convertButton.setOnAction(action -> {
+            if (unitField.getText().matches("[1-9][0-9]*.?[0-9]*")) {
+                String unit = unitSelect.getValue().toString();
+                ArrayList<Double> results = convert(Double.parseDouble(unitField.getText()),unit);
+                createConvertOutput(results, unit, outputField);
+            }
+        });
+
     }
 
     private String createBonusOutput(int roll, int bonus) {
@@ -318,6 +397,69 @@ public class RollController implements Controller {
         hBox.getChildren().add(textRight);
 
         vBox.getChildren().add(hBox);
+    }
+
+    private ArrayList<Double> convert(Double amount, String unit){
+        double feet = 0;
+        double meters = 0;
+        double fields = 0;
+        ArrayList<Double> res = new ArrayList<>();
+
+        switch (unit) {
+            case FEET -> {
+                meters = Math.round((amount * 0.3048) * 100.0) / 100.0;
+                fields = Math.round((amount / fpf) * 100.0) / 100.0;
+            }
+            case METERS -> {
+                feet = Math.round((amount * 3.2808) * 100.0) / 100.0;
+                fields = Math.round((amount / mpf) * 100.0) / 100.0;
+            }
+            case FIELDS -> {
+                feet = Math.round((amount * fpf) * 100.0) / 100.0;
+                meters = Math.round((amount * mpf) * 100.0) / 100.0;
+            }
+        }
+        res.addAll(List.of(feet, meters, fields));
+
+        return res;
+    }
+
+    private void createConvertOutput(ArrayList<Double> res, String unit, Label outputField) {
+        StringBuilder out = new StringBuilder();
+        double feet = res.get(0);
+        double meters = res.get(1);
+        double fields = res.get(2);
+
+        if(feet != 0){
+           out.append(feet).append(" ");
+           if (feet == 1) {
+               out.append(FOOT);
+           } else {
+               out.append(FEET);
+           }
+           out.append(", ");
+        }
+        if(meters != 0){
+            out.append(meters).append(" ");
+            if (meters == 1) {
+                out.append(METER);
+            } else {
+                out.append(METERS);
+            }
+            out.append(", ");
+        }
+        if(fields != 0){
+            out.append(fields).append(" ");
+            if (fields == 1) {
+                out.append(FIELD);
+            } else {
+                out.append(FIELDS);
+            }
+        }
+        if (out.charAt(out.length()-1)==' '){
+            out.delete(out.length()-2,out.length());
+        }
+        outputField.setText(out.toString());
     }
 
     @Override
