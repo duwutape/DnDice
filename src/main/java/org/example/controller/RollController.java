@@ -13,7 +13,6 @@ import org.example.App;
 import org.example.Main;
 import org.example.service.RandomService;
 
-import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +28,6 @@ public class RollController implements Controller {
     private double mpf;
     private double fpf;
     private boolean isEnabled;
-    private PropertyChangeListener unitListener;
-    private PropertyChangeListener amountListener;
-    private String unit;
 
     public RollController(App app, RandomService randomService) {
         this.app = app;
@@ -285,7 +281,7 @@ public class RollController implements Controller {
         });
     }
 
-    private void createUnitConvertTab(Parent parent) throws IOException {
+    private void createUnitConvertTab(Parent parent) {
         TextField confUnitField = (TextField) parent.lookup("#unitFieldConf");
         ChoiceBox confUnitSelect = (ChoiceBox) parent.lookup("#unitSelectConf");
         TextField confFieldField = (TextField) parent.lookup("#fieldFieldConf");
@@ -298,13 +294,13 @@ public class RollController implements Controller {
         Button convertButton = (Button) parent.lookup("#convertButton");
 
         confUnitSelect.setItems(FXCollections.observableArrayList(UNITS));
-        confUnitSelect.setValue(UNITS.get(0));
+        confUnitSelect.setValue(UNITS.getFirst());
 
         confUnitField.setAlignment(Pos.CENTER);
         confFieldField.setAlignment(Pos.CENTER);
 
         unitSelect.setItems(FXCollections.observableArrayList(ALL_UNITS));
-        unitSelect.setValue(ALL_UNITS.get(0));
+        unitSelect.setValue(ALL_UNITS.getFirst());
         unitField.setAlignment(Pos.CENTER);
 
         mpf = 1.52;
@@ -403,7 +399,6 @@ public class RollController implements Controller {
         double feet = 0;
         double meters = 0;
         double fields = 0;
-        ArrayList<Double> res = new ArrayList<>();
 
         switch (unit) {
             case FEET -> {
@@ -419,9 +414,8 @@ public class RollController implements Controller {
                 meters = Math.round((amount * mpf) * 100.0) / 100.0;
             }
         }
-        res.addAll(List.of(feet, meters, fields));
 
-        return res;
+        return new ArrayList<>(List.of(feet, meters, fields));
     }
 
     private void createConvertOutput(ArrayList<Double> res, Label outputField) {
