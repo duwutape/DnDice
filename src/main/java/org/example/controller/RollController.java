@@ -345,8 +345,8 @@ public class RollController implements Controller {
         convertButton.setOnAction(action -> {
             if (unitField.getText().matches("[1-9][0-9]*.?[0-9]*")) {
                 String unit = unitSelect.getValue().toString();
-                ArrayList<Double> results = convert(Double.parseDouble(unitField.getText()),unit);
-                createConvertOutput(results, unit, outputField);
+                ArrayList<Double> results = convert(Double.parseDouble(unitField.getText()), unit);
+                createConvertOutput(results, outputField);
             }
         });
 
@@ -399,7 +399,7 @@ public class RollController implements Controller {
         vBox.getChildren().add(hBox);
     }
 
-    private ArrayList<Double> convert(Double amount, String unit){
+    private ArrayList<Double> convert(Double amount, String unit) {
         double feet = 0;
         double meters = 0;
         double fields = 0;
@@ -424,11 +424,8 @@ public class RollController implements Controller {
         return res;
     }
 
-    private void createConvertOutput(ArrayList<Double> res, String unit, Label outputField) {
+    private void createConvertOutput(ArrayList<Double> res, Label outputField) {
         StringBuilder out = new StringBuilder();
-        double feet = res.get(0);
-        double meters = res.get(1);
-        double fields = res.get(2);
 
         out.append(addUnit(res.get(0), FEET));
         out.append(addUnit(res.get(1), METERS));
