@@ -430,36 +430,42 @@ public class RollController implements Controller {
         double meters = res.get(1);
         double fields = res.get(2);
 
-        if(feet != 0){
-           out.append(feet).append(" ");
-           if (feet == 1) {
-               out.append(FOOT);
-           } else {
-               out.append(FEET);
-           }
-           out.append(", ");
-        }
-        if(meters != 0){
-            out.append(meters).append(" ");
-            if (meters == 1) {
-                out.append(METER);
-            } else {
-                out.append(METERS);
-            }
-            out.append(", ");
-        }
-        if(fields != 0){
-            out.append(fields).append(" ");
-            if (fields == 1) {
-                out.append(FIELD);
-            } else {
-                out.append(FIELDS);
-            }
-        }
-        if (out.charAt(out.length()-1)==' '){
-            out.delete(out.length()-2,out.length());
+        out.append(addUnit(res.get(0), FEET));
+        out.append(addUnit(res.get(1), METERS));
+        out.append(addUnit(res.get(2), FIELDS));
+
+        if (out.charAt(out.length() - 1) == ' ') {
+            out.delete(out.length() - 2, out.length());
         }
         outputField.setText(out.toString());
+    }
+
+    private StringBuilder addUnit(double amount, String unit){
+        StringBuilder sb = new StringBuilder();
+
+        if (amount != 0) {
+            sb.append(amount);
+            sb = removeZero(sb);
+            sb.append(" ");
+            if (amount == 1) {
+                switch (unit){
+                    case FEET -> sb.append(FOOT);
+                    case METERS -> sb.append(METER);
+                    case FIELDS -> sb.append(FIELD);
+                }
+            } else {
+                sb.append(unit);
+            }
+            sb.append(", ");
+        }
+        return sb;
+    }
+
+    private StringBuilder removeZero(StringBuilder sb) {
+        if (sb.charAt(sb.length()-1) == '0'){
+            sb.delete(sb.length() - 2, sb.length());
+        }
+        return sb;
     }
 
     @Override
